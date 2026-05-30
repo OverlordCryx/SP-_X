@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GOD TIER SPEEDTEST</title>
+    <link rel="preconnect" href="https://nothing.fireprobe.net" crossorigin>
+    <link rel="dns-prefetch" href="https://nothing.fireprobe.net">
+    
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            background-color: #000000;
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+            /* Efekt potężnej, oddychającej niebieskiej poświaty z brzegów */
+            animation: neonPulse 4s infinite alternate;
+        }
+
+        @keyframes neonPulse {
+            0% { box-shadow: inset 0 0 50px rgba(49, 0, 255, 0.05); }
+            100% { box-shadow: inset 0 0 200px rgba(49, 0, 255, 0.25); }
+        }
+
+        .iframe-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; 
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+            /* Ekstremalny filtr kontrastu dla samej ramki, żeby zlała się z czernią */
+            filter: contrast(1.15) saturate(1.1);
+        }
+
+        /* Warstwa z animacjami */
+        #particle-canvas {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 10; 
+            pointer-events: none; 
+            mix-blend-mode: screen; /* Efekt silnego światła z ekranu */
+        }
+
+        /* Odświeżone scanlines w kolorze #3100FF i ostra czarna winieta */
+        #particle-canvas::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: 
+                linear-gradient(rgba(49, 0, 255, 0.08) 1px, transparent 1px),
+                radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.85) 100%);
+            background-size: 100% 4px, 100% 100%;
+            pointer-events: none;
+            z-index: 11;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="iframe-container">
+        <iframe scrolling="no" src="https://nothing.fireprobe.net"></iframe>
+    </div>
+
+    <div id="particle-canvas"></div>
+
+    <script src="script_particles.js"></script>
+</body>
+</html>
