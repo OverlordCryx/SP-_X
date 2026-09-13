@@ -4,33 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title> </title>
-    <link rel="preconnect" href="https://nothing.fireprobe.net" crossorigin>
-    <link rel="dns-prefetch" href="https://nothing.fireprobe.net">
+    
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='42' fill='%23FFD700'/><circle cx='50' cy='50' r='20' fill='%23000'/></svg>">
+    
+    <link rel="preconnect" href="https://xnothingx.fireprobe.net" crossorigin>
+    <link rel="dns-prefetch" href="https://xnothingx.fireprobe.net">
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
-        body {
-            background-color: #000000;
+        html, body {
+            background: #000;
             overflow: hidden;
-            width: 100vw;
-            height: 100vh;
-            /* Efekt potężnej, oddychającej niebieskiej poświaty z brzegów */
-            animation: neonPulse 4s infinite alternate;
-        }
-
-        @keyframes neonPulse {
-            0% { box-shadow: inset 0 0 50px rgba(49, 0, 255, 0.05); }
-            100% { box-shadow: inset 0 0 200px rgba(49, 0, 255, 0.25); }
+            width: 100%;
+            height: 100%;
         }
 
         .iframe-container {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1; 
+            inset: 0;
+            z-index: 1;
         }
 
         iframe {
@@ -38,41 +31,85 @@
             height: 100%;
             border: none;
             display: block;
-            /* Ekstremalny filtr kontrastu dla samej ramki, żeby zlała się z czernią */
-            filter: contrast(1.15) saturate(1.1);
         }
 
-        /* Warstwa z animacjami */
-        #particle-canvas {
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            z-index: 10; 
-            pointer-events: none; 
-            mix-blend-mode: screen; /* Efekt silnego światła z ekranu */
-        }
-
-        /* Odświeżone scanlines w kolorze #3100FF i ostra czarna winieta */
-        #particle-canvas::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                linear-gradient(rgba(49, 0, 255, 0.08) 1px, transparent 1px),
-                radial-gradient(circle at center, transparent 30%, rgba(0, 0, 0, 0.85) 100%);
-            background-size: 100% 4px, 100% 100%;
+        .bg-glow {
+            position: fixed;
+            inset: 0;
+            z-index: 10;
             pointer-events: none;
+            background: 
+                radial-gradient(ellipse 80% 60% at 15% 25%, rgba(255, 200, 0, 0.18) 0%, transparent 55%),
+                radial-gradient(ellipse 70% 50% at 85% 75%, rgba(255, 180, 0, 0.14) 0%, transparent 55%),
+                radial-gradient(ellipse 50% 40% at 50% 50%, rgba(255, 215, 0, 0.07) 0%, transparent 60%);
+            animation: bgShift 11s ease-in-out infinite alternate;
+            mix-blend-mode: screen;
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
             z-index: 11;
+            pointer-events: none;
+            background: 
+                linear-gradient(rgba(255, 215, 0, 0.045) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 215, 0, 0.045) 1px, transparent 1px);
+            background-size: 55px 55px;
+            mask-image: radial-gradient(ellipse at center, transparent 20%, black 70%);
+            -webkit-mask-image: radial-gradient(ellipse at center, transparent 20%, black 70%);
+            animation: gridPulse 7s ease-in-out infinite alternate;
+            mix-blend-mode: screen;
+        }
+
+        .bg-vignette {
+            position: fixed;
+            inset: 0;
+            z-index: 12;
+            pointer-events: none;
+            background: radial-gradient(ellipse at center, transparent 40%, rgba(0, 0, 0, 0.55) 100%);
+        }
+
+        @keyframes bgShift {
+            0% {
+                opacity: 0.85;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1.08);
+            }
+        }
+
+        @keyframes gridPulse {
+            0% { opacity: 0.5; }
+            100% { opacity: 0.95; }
         }
     </style>
 </head>
 <body>
     
     <div class="iframe-container">
-        <iframe scrolling="no" src="https://nothing.fireprobe.net"></iframe>
+        <iframe 
+            scrolling="no" 
+            src="https://xnothingx.fireprobe.net" 
+            title="Speed Test"
+            sandbox="allow-scripts allow-same-origin allow-forms allow-popups-to-escape-sandbox"
+        ></iframe>
     </div>
 
-    <div id="particle-canvas"></div>
+    <div class="bg-glow"></div>
+    <div class="bg-grid"></div>
+    <div class="bg-vignette"></div>
 
-    <script src="script_particles.js"></script>
+    <script>
+        function blockContext(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            return false;
+        }
+        document.addEventListener('contextmenu', blockContext, true);
+        window.addEventListener('contextmenu', blockContext, true);
+        document.addEventListener('selectstart', e => e.preventDefault(), true);
+    </script>
 </body>
 </html>
